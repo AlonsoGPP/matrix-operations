@@ -1,4 +1,4 @@
-from tkinter import  Frame,Label,StringVar,Entry,Button
+from tkinter import  Frame,Label,StringVar,Entry,Button, messagebox
 class MatrizInput:
      ABCEDARIO = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -34,7 +34,12 @@ class MatrizInput:
         for i in range(self.get_rows):
             self.mat_value.append([])
             for j in range(self.get_cols):
-                self.mat_value[i].append(int(self.text_var[i][j].get()))
+                try:
+                    valor:float = float(self.text_var[i][j].get())
+                except Exception as e:
+                    messagebox.showerror(message=f"Error en ingreso: {e}", title="Error")
+                    return None
+                self.mat_value[i].append(valor)
         return self.mat_value
     #  def get_element(self,f,c):
     #      return int(self.text_var[f][c].get())

@@ -1,4 +1,4 @@
-from tkinter import Toplevel, Label, Frame, IntVar, Entry, Button
+from tkinter import Toplevel, Label, Frame, IntVar, Entry, Button, messagebox
 import menu
 import matrix
 import matriz_operations
@@ -36,8 +36,18 @@ class Potencia:
 
         self.gui_trans_menu_dim.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_trans_menu_dim.mainloop()
-
+    def validar_campos_dim(self):
+        try:
+            self.rows.get()
+            self.cols.get()
+            self.pot_number.get()
+        except Exception as e:
+            messagebox.showerror(message=f"Error al ingresar dimenciones: {e}", title="Error")
+            return False
+        return True
     def ingreso_matriz(self,rows, cols):
+        if(self.validar_campos_dim() is False):
+           return
         self.gui_ingreso_matriz= Toplevel()
         matriz_1 = matrix.MatrizInput(rows,cols,self.gui_ingreso_matriz,0)
         
@@ -47,10 +57,9 @@ class Potencia:
         self.gui_ingreso_matriz.protocol("WM_DELETE_WINDOW",menu.gui_menu.destroy)
         self.gui_ingreso_matriz.mainloop()
     def procesar_matriz(self,matriz_1:matrix.MatrizInput):
-        try:
-            matriz_a_value = matriz_1.get_matriz()
-        except Exception as e:
-            print('Hubo un error',e)
+        matriz_a_value = matriz_1.get_matriz()
+        if matriz_a_value is None:
+            return
         self.salida_matriz(matriz_a_value)
     def salida_matriz(self, m1_val:list):
         self.gui_ingreso_matriz.destroy()
@@ -62,13 +71,14 @@ class Potencia:
         self.frame_sum_salida.pack(fill='both', expand=True, padx=5, pady=5)
         rows_length = self.rows.get()
         cols_length = self.cols.get()
-       
+        def formatear_numero(numero)->str:
+                return "{:.2f}".format(numero) if numero % 1 != 0 else "{:.0f}".format(numero)
 
         Label(self.frame_sum_salida, text="M. Ingresada:").grid(row=1,column=1)
 
         for i in range(rows_length):
             for j in range(cols_length):
-                Label(self.frame_sum_salida,text=m1_val[i][j], bd=5).grid(row=i+1, column=j+2)
+                Label(self.frame_sum_salida,text=formatear_numero(m1_val[i][j]), bd=5).grid(row=i+1, column=j+2)
         pot_int=self.pot_number.get()
         Label(self.frame_sum_salida, text=f"A^{pot_int}: ").grid(row=cols_length*2,column=1)
 
@@ -76,7 +86,7 @@ class Potencia:
 
         for i in range(cols_length):
             for j in range(rows_length):
-                Label(self.frame_sum_salida,text=matriz_resultante[i][j], bd=5).grid(row=i+cols_length*2, column=j+2)
+                Label(self.frame_sum_salida,text=formatear_numero(matriz_resultante[i][j]), bd=5).grid(row=i+cols_length*2, column=j+2)
         self.frame_btn_volver=Frame(self.gui_transp_salida)
         self.frame_btn_volver.pack(fill='both', expand=True, padx=5, pady=5)
         Button(self.frame_btn_volver, text="Volver", width=4, command=self.volver_menu).pack(side='bottom', anchor='e')
