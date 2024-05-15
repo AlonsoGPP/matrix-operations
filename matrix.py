@@ -3,7 +3,7 @@ class MatrizInput:
      ABCEDARIO = 'abcdefghijklmnopqrstuvwxyz'
 
      def __init__(self, rows, cols, wind, id_name):
-        print("llegue")
+        #print("llegue")
         self.gui_input_matriz = wind
         self.gui_input_matriz.title("Ingreso Matriz")
         self.gui_input_matriz.resizable(False,False)
@@ -36,13 +36,13 @@ class MatrizInput:
             for j in range(self.get_cols):
                 self.mat_value[i].append(int(self.text_var[i][j].get()))
         return self.mat_value
-     def get_element(self,f,c):
-         return int(self.text_var[f][c].get())
-     def get_fila(self, fila):
-         fila_text_vars = self.text_var[fila-1]
-         fila_int=[]
-         for i in range(len(fila_text_vars)):
-             fila_int.append((fila_text_vars[i]).get())
+    #  def get_element(self,f,c):
+    #      return int(self.text_var[f][c].get())
+    #  def get_fila(self, fila):
+    #      fila_text_vars = self.text_var[fila-1]
+    #      fila_int=[]
+    #      for i in range(len(fila_text_vars)):
+    #          fila_int.append((fila_text_vars[i]).get())
     
     
 

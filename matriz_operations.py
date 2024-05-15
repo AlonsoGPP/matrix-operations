@@ -61,3 +61,140 @@ class MatrisOperations:
         for _ in range(pot_value-1):
             result=self.calcular_mul(m1_value,result)
         return result
+    def transpuesta(self,m1):
+        filas = len(m1)
+        columnas = len(m1[0])
+        transpuesta = []
+
+        for i in range(columnas):
+            transpuesta.append([])
+        #rellena usando j como iterador sobre una matriz precreada    
+        for i in range(filas):
+            for j in range(columnas):
+                transpuesta[j].append(m1[i][j])
+            
+                
+
+        return transpuesta
+    def intercambiar_filas(self, matriz, i, j):
+        """
+        Función para intercambiar dos filas de una matriz.
+        """
+        matriz[i], matriz[j] = matriz[j], matriz[i]
+
+    def multiplicar_fila_por_escalar(self, matriz, fila, escalar):
+        """
+        Función para multiplicar una fila de una matriz por un escalar.
+        """
+        for i in range(len(matriz[0])):
+            matriz[fila][i] *= escalar
+
+    def sumar_filas_multiplicadas(self,matriz, fila_destino, fila_origen, escalar):
+        """
+        Función para sumar a una fila de la matriz la multiplicación de otra fila por un escalar.
+        """
+        for i in range(len(matriz[0])):
+            matriz[fila_destino][i] += matriz[fila_origen][i] * escalar
+
+    def inversa_matriz(self, matriz):
+        """
+        Función para calcular la inversa de una matriz utilizando eliminación gaussiana.
+        """
+        n = len(matriz)
+        identidad = self.matriz_identidad(n)
+
+        # Convertir matriz a una matriz aumentada (concatenando con la matriz identidad)
+        for i in range(n):
+            matriz[i] += identidad[i]
+
+        # Aplicar eliminación gaussiana hacia adelante
+        for i in range(n):
+            # Si el elemento diagonal es 0, intercambiar filas
+            if matriz[i][i] == 0:
+                for j in range(i+1, n):
+                    if matriz[j][i] != 0:
+                        self.intercambiar_filas(matriz, i, j)
+                        break
+            
+            # Hacer el elemento diagonal igual a 1
+            escalar = 1 / matriz[i][i]
+            self.multiplicar_fila_por_escalar(matriz, i, escalar)
+
+            # Hacer 0 todos los elementos debajo de la diagonal
+            for j in range(i+1, n):
+                escalar = -matriz[j][i]
+                self.sumar_filas_multiplicadas(matriz, j, i, escalar)
+
+        # Aplicar eliminación gaussiana hacia atrás
+        for i in range(n-1, 0, -1):
+            for j in range(i-1, -1, -1):
+                escalar = -matriz[j][i]
+                self.sumar_filas_multiplicadas(matriz, j, i, escalar)
+
+        # Extraer la parte derecha (la inversa)
+        inversa = [fila[n:] for fila in matriz]
+        
+        
+        return inversa
+    def scalar_mul(self, a, scalar):
+        """Multiplies a matrix by a scalar value.
+        """
+        return [[elem * scalar for elem in row] for row in a]
+    def inversa(self, mt): #usando formula
+        """Returns the inverse of an nxn matrix.
+
+        >>> a = matrix(row(1, 0, 0), row(0, 1, 0), row(0, 0, 1))
+        >>> inverse(a)
+        [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+        """
+        coord = self.get_element_at    
+
+        def adj():
+            adj_matrix = []
+
+            for x in range(1, len(mt[0])+1):
+                row = []
+                for y in range(1, len(mt)+1):
+                    row.append(self.cofactor(mt, x, y))
+                adj_matrix.append(row)
+            return self.transpuesta(adj_matrix)
+                
+        if len(mt) == 2 and len(mt[0]) == 2:
+            div = 1 / self.determinante(mt)
+            pre_inverse = []
+            pre_inverse.append([coord(mt,2,2) , -1*coord(mt,1,2)])
+            pre_inverse.append([-1*coord(mt,2,1), coord(mt,1,1)])
+            
+            return self.scalar_mul(pre_inverse, div)
+
+        adj_matrix = adj()
+        div = 1 / self.determinante(mt)
+
+        return self.scalar_mul(adj_matrix, div) 
+    
+    def rango_np(self, mt):
+        return np.linalg.matrix_rank(mt)
+    def rango_matriz(self, matriz):
+        """
+        Función para calcular el rango de una matriz utilizando eliminación gaussiana.
+        """
+        # Aplicar eliminación gaussiana
+        for i in range(len(matriz)):
+            # Si el elemento diagonal es 0, intercambiar filas
+            if matriz[i][i] == 0:
+                for j in range(i+1, len(matriz)):
+                    if matriz[j][i] != 0:
+                        matriz[i], matriz[j] = matriz[j], matriz[i]
+                        break
+                    
+
+            # Hacer cero los elementos debajo de la diagonal
+            for j in range(i+1, len(matriz)):
+                if matriz[i][i] != 0:
+                    escalar = -matriz[j][i] / matriz[i][i]
+                    for k in range(i, len(matriz[0])):
+                        matriz[j][k] += escalar * matriz[i][k]
+
+        # Contar el número de filas no nulas
+        rango = sum(1 for fila in matriz if any(fila))
+        return rango

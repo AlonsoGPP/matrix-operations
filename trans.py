@@ -1,6 +1,7 @@
 from tkinter import Toplevel, Label, Frame, IntVar, Entry, Button
 import menu
 import matrix
+from matriz_operations import MatrisOperations
 class Transpuesta:
     def __init__(self):
         #Crea ventana nueva
@@ -50,22 +51,8 @@ class Transpuesta:
             print('Hubo un error',e)
         self.salida_matriz(matriz_a_value)
     def calcular_transpuesta(self,m1:list):
-       filas = len(m1)
-       columnas = len(m1[0])
-       transpuesta = []
-
-       for i in range(columnas):
-           transpuesta.append([])
-       #rellena usando j como iterador sobre una matriz precreada    
-       for i in range(filas):
-           for j in range(columnas):
-            transpuesta[j].append(m1[i][j])
+      return MatrisOperations().transpuesta(m1)
            
-            
-
-       return transpuesta
-    
-                    
     def salida_matriz(self, m1_val:list):
         self.gui_ingreso_matriz.destroy()
         self.gui_transp_salida = Toplevel()

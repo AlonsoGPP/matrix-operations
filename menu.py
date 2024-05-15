@@ -1,6 +1,6 @@
 from tkinter import Tk, Frame,Label,Button
 from tkinter.constants import BOTH
-import suma, mult, trans, determinante, potencia
+import suma, mult, trans, determinante, potencia, inversa, rango
 gui_menu = Tk() 
 gui_menu.geometry("500x500")
 gui_menu.resizable(False,False)
@@ -14,6 +14,8 @@ class Menu:
         self.trans_btn=Button(frame_menu, text="Transpuesta Matriz", command=trans.Transpuesta)
         self.det_btn=Button(frame_menu, text="Determinante Matriz", command=determinante.Determinante)
         self.pot_btn=Button(frame_menu, text="Potencia de Matriz", command=potencia.Potencia)
+        self.inv_btn=Button(frame_menu, text="Inversa de Matriz", command=inversa.Inversa)
+        self.rank_btn=Button(frame_menu, text="Rango de Matriz", command=rango.Rango)
         self._packing()
         gui_menu.mainloop()
     def _packing(self):
@@ -23,3 +25,5 @@ class Menu:
         self.trans_btn.pack()
         self.det_btn.pack()
         self.pot_btn.pack()
+        self.inv_btn.pack()
+        self.rank_btn.pack()
