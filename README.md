@@ -4,4 +4,4 @@ Software de desarrollo de matrices,  funcionalidades de operaciones basicas como
 
 | Nombre  | Descarga |
 | ------------- |:-------------:|
-| Matrix Solever      |[Matriz_solver.rar](https://github.com/AlonsoGPP/matrix-operations/raw/main/ejecutable/MatrixSolver_ejecutable.rar)    |
+| Matrix Solver      |[Matrix_solver.rar](https://github.com/AlonsoGPP/matrix-operations/raw/main/ejecutable/MatrixSolver_ejecutable.rar)    |
