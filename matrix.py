@@ -6,7 +6,7 @@ class MatrizInput:
         #print("llegue")
         self.gui_input_matriz = wind
         self.gui_input_matriz.title("Ingreso Matriz")
-        self.gui_input_matriz.resizable(False,False)
+        #self.gui_input_matriz.resizable(False,False)
 
         self.frame_input_matriz = Frame(self.gui_input_matriz, highlightbackground='red', highlightthickness=1)
         self.frame_input_matriz.pack(fill='both', expand=True, padx=5, pady=5)
@@ -19,7 +19,6 @@ class MatrizInput:
         
         self.get_rows, self.get_cols = (rows.get(),cols.get())
         for i in range(self.get_rows):
-            print(i)
             self.text_var.append([])#se añade una lista a la lista
             self.entries.append([])
             for j in range(self.get_cols):
@@ -32,7 +31,7 @@ class MatrizInput:
      def get_matriz(self):
         self.mat_value = []
         for i in range(self.get_rows):
-            self.mat_value.append([])
+            self.mat_value.append([])#añade nueva fila
             for j in range(self.get_cols):
                 try:
                     valor:float = float(self.text_var[i][j].get())
@@ -41,13 +40,7 @@ class MatrizInput:
                     return None
                 self.mat_value[i].append(valor)
         return self.mat_value
-    #  def get_element(self,f,c):
-    #      return int(self.text_var[f][c].get())
-    #  def get_fila(self, fila):
-    #      fila_text_vars = self.text_var[fila-1]
-    #      fila_int=[]
-    #      for i in range(len(fila_text_vars)):
-    #          fila_int.append((fila_text_vars[i]).get())
+
     
     
 

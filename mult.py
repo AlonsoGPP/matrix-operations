@@ -4,10 +4,10 @@ import menu
 import matrix
 class Mult:
     def __init__(self) -> None:
-        menu.gui_menu.withdraw()
+        #menu.gui_menu.withdraw()
         self.gui_mul_menu_dim = Toplevel()
         self.gui_mul_menu_dim.title("Multiplicacion De Matrices")
-        self.gui_mul_menu_dim.resizable(False, False)
+        #self.gui_mul_menu_dim.resizable(False, False)
 
         self.frame_menu_sum = Frame(self.gui_mul_menu_dim, highlightbackground='red', highlightthickness=1)
         self.frame_menu_sum.pack(fill='both', expand=True, padx=5, pady=5)
@@ -46,7 +46,6 @@ class Mult:
         Button(self.frame_menu_sum, text='Ingresar', padx=16, pady=5, command=lambda:self.ingreso_matriz(self.rows,self.cols,self.rows_b, self.cols_b))\
             .grid(row=89, column=4)
 
-        self.gui_mul_menu_dim.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_mul_menu_dim.mainloop()
     def validar_campos_dim(self):
         try:
@@ -67,7 +66,6 @@ class Mult:
        frame_input_matriz = Frame(self.gui_ingreso_matriz, highlightbackground='red', highlightthickness=1)
        frame_input_matriz.pack(fill='both', expand=True, padx=5, pady=5)
        Button(frame_input_matriz,text="Calcular", width=8, command=lambda:self.procesar_matriz(m1,m2)).grid(row=1, column=1)
-       self.gui_mul_menu_dim.protocol("WM_DELETE_WINDOW",menu.gui_menu.destroy)
        self.gui_ingreso_matriz.mainloop()
     def procesar_matriz(self,m1:matrix.MatrizInput,m2:matrix.MatrizInput):
         matriz_a_value = m1.get_matriz()
@@ -80,7 +78,7 @@ class Mult:
         #self.gui_ingreso_matriz.destroy()
         self.gui_mul_salida = Toplevel()
         self.gui_mul_salida.title("Multiplicacion Salida")
-        self.gui_mul_salida.resizable(False,False)
+        #self.gui_mul_salida.resizable(False,False)
 
         self.frame_sum_salida = Frame(self.gui_mul_salida, highlightbackground='black', highlightthickness=1)
         self.frame_sum_salida.pack(fill='both', expand=True, padx=5, pady=5)
@@ -118,7 +116,6 @@ class Mult:
         self.frame_btn_volver.pack(fill='both', expand=True, padx=5, pady=5)
         Button(self.frame_btn_volver, text="Volver", width=4, command=self.volver_menu).pack(side='bottom', anchor='e')
 
-        self.gui_mul_salida.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_mul_salida.mainloop()
     def calcular_mul(self,m1_val,m2_val)->list:
          product_matriz = np.matmul(m1_val,m2_val)

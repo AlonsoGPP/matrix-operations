@@ -5,10 +5,10 @@ import matriz_operations
 class Potencia: 
     def __init__(self):
         #Crea ventana nueva
-        menu.gui_menu.withdraw()
+        #menu.gui_menu.withdraw()
         self.gui_trans_menu_dim = Toplevel()
         self.gui_trans_menu_dim.title("Potencia de Matriz")
-        self.gui_trans_menu_dim.resizable(False, False)
+        #self.gui_trans_menu_dim.resizable(False, False)
 
         #crea frame donde van los componentes
         self.frame_menu_trans = Frame(self.gui_trans_menu_dim, highlightbackground='red', highlightthickness=1)
@@ -28,13 +28,11 @@ class Potencia:
         self.pot_number=IntVar()
         self.pot_number.set(2)
 
-        #OptionMenu(self.frame_menu_trans, self.cols, *range(2, 5)).grid(row=4, column=4)
         Label(self.frame_menu_trans, text="").grid(row=5, column=1)
         Label(self.frame_menu_trans, text="Potencia: ").grid(row=6, column=1)
         Entry(self.frame_menu_trans, textvariable=self.pot_number,width=3).grid(row=6, column=2)
         Button(self.frame_menu_trans, text='Ingresar', padx=16, pady=5, command=lambda:self.ingreso_matriz(self.rows,self.cols)).grid(row=7, column=4)
 
-        self.gui_trans_menu_dim.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_trans_menu_dim.mainloop()
     def validar_campos_dim(self):
         try:
@@ -54,7 +52,6 @@ class Potencia:
         frame_input_matriz = Frame(self.gui_ingreso_matriz, highlightbackground='red', highlightthickness=1)
         frame_input_matriz.pack(fill='both', expand=True, padx=5, pady=5)
         Button(frame_input_matriz,text="Calcular", width=8, command=lambda:self.procesar_matriz(matriz_1)).grid(row=1, column=1)
-        self.gui_ingreso_matriz.protocol("WM_DELETE_WINDOW",menu.gui_menu.destroy)
         self.gui_ingreso_matriz.mainloop()
     def procesar_matriz(self,matriz_1:matrix.MatrizInput):
         matriz_a_value = matriz_1.get_matriz()
@@ -65,7 +62,7 @@ class Potencia:
         self.gui_ingreso_matriz.destroy()
         self.gui_transp_salida = Toplevel()
         self.gui_transp_salida.title("Matriz Transpuesta")
-        self.gui_transp_salida.resizable(False,False)
+        #self.gui_transp_salida.resizable(False,False)
 
         self.frame_sum_salida = Frame(self.gui_transp_salida, highlightbackground='black', highlightthickness=1)
         self.frame_sum_salida.pack(fill='both', expand=True, padx=5, pady=5)
@@ -91,7 +88,6 @@ class Potencia:
         self.frame_btn_volver.pack(fill='both', expand=True, padx=5, pady=5)
         Button(self.frame_btn_volver, text="Volver", width=4, command=self.volver_menu).pack(side='bottom', anchor='e')
 
-        self.gui_transp_salida.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_transp_salida.mainloop()
     def volver_menu(self):
         self.gui_ingreso_matriz.destroy()

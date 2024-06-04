@@ -5,10 +5,10 @@ from matriz_operations import MatrisOperations
 class Determinante:
     def __init__(self) -> None:
          #Crea ventana nueva
-        menu.gui_menu.withdraw()
+        #menu.gui_menu.withdraw()
         self.gui_trans_menu_dim = Toplevel()
         self.gui_trans_menu_dim.title("Determinante de Matriz")
-        self.gui_trans_menu_dim.resizable(False, False)
+        #self.gui_trans_menu_dim.resizable(False, False)
 
         #crea frame donde van los componentes
         self.frame_menu_trans = Frame(self.gui_trans_menu_dim, highlightbackground='red', highlightthickness=1)
@@ -23,16 +23,14 @@ class Determinante:
         #combo para elegir los fila y columnas  , 2do es el value
         Entry(self.frame_menu_trans, textvariable=self.rows, width=3).grid(row=4, column=2)
         
-        Label(self.frame_menu_trans, text="x").grid(row=4, column=3)
+      
 
-        self.cols=IntVar()
-        self.cols.set(2)
-        Entry(self.frame_menu_trans, textvariable=self.cols,width=3).grid(row=4, column=4)
+        self.cols=self.rows
+        
         #OptionMenu(self.frame_menu_trans, self.cols, *range(2, 5)).grid(row=4, column=4)
 
         Button(self.frame_menu_trans, text='Ingresar', padx=16, pady=5, command=lambda:self.ingreso_matriz(self.rows,self.cols)).grid(row=6, column=4)
 
-        self.gui_trans_menu_dim.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_trans_menu_dim.mainloop()
     def validar_campos_dim(self):
         try:
@@ -51,7 +49,7 @@ class Determinante:
        frame_input_matriz = Frame(self.gui_ingreso_matriz, highlightbackground='red', highlightthickness=1)
        frame_input_matriz.pack(fill='both', expand=True, padx=5, pady=5)
        Button(frame_input_matriz,text="Calcular", width=8, command=lambda:self.procesar_matriz(m1)).grid(row=1, column=1)
-       self.gui_ingreso_matriz.protocol("WM_DELETE_WINDOW",menu.gui_menu.destroy)
+       #self.gui_ingreso_matriz.protocol("WM_DELETE_WINDOW",menu.gui_menu.destroy)
        self.gui_ingreso_matriz.mainloop()
 
     def procesar_matriz(self,m1:matrix.MatrizInput):
@@ -64,7 +62,7 @@ class Determinante:
         self.gui_ingreso_matriz.destroy()
         self.gui_transp_salida = Toplevel()
         self.gui_transp_salida.title("Determinante Matriz")
-        self.gui_transp_salida.resizable(False,False)
+        #self.gui_transp_salida.resizable(False,False)
 
         self.frame_sum_salida = Frame(self.gui_transp_salida, highlightbackground='black', highlightthickness=1)
         self.frame_sum_salida.pack(fill='both', expand=True, padx=5, pady=5)
@@ -89,7 +87,7 @@ class Determinante:
         self.frame_btn_volver.pack(fill='both', expand=True, padx=5, pady=5)
         Button(self.frame_btn_volver, text="Volver", width=4, command=self.volver_menu).pack(side='bottom', anchor='e')
 
-        self.gui_transp_salida.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
+        #self.gui_transp_salida.protocol("WM_DELETE_WINDOW", menu.gui_menu.destroy)
         self.gui_transp_salida.mainloop()
     def volver_menu(self):
         self.gui_ingreso_matriz.destroy()

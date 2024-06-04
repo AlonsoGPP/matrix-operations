@@ -1,17 +1,31 @@
-from tkinter import Tk, Frame,Label,Button
+from tkinter import Tk, Frame,Label,Button,messagebox,Menu
 from tkinter.constants import BOTH
 from PIL import ImageTk, Image
 import suma, mult, trans, determinante, potencia, inversa, rango
 gui_menu = Tk() 
 gui_menu.geometry("500x500")
+gui_menu.iconbitmap("assets/matrix-icon.ico")
 gui_menu.resizable(False,False)
 gui_menu.title("Matrix Solver")
 
-main_image_path="matrix-icon.jpg"
+def acerca_de():
+    messagebox.showinfo("Acerca de", "Creado por: David Garcia Pariona\nCurso: Investigacion de Operaciones I")
+
+#menu
+barra_menu = Menu(gui_menu)
+menu_archivo = Menu(barra_menu, tearoff=0)
+menu_archivo.add_command(label="Acerca de", command=acerca_de)
+
+menu_archivo.add_separator()
+menu_archivo.add_command(label="Salir", command=gui_menu.quit)
+
+barra_menu.add_cascade(label="Ayuda", menu=menu_archivo)
+gui_menu.config(menu=barra_menu)
+
+main_image_path="assets/matrix-icon.jpg"
 img = Image.open(main_image_path)
 img = img.resize((100, 100), Image.Resampling.LANCZOS)
 img = ImageTk.PhotoImage(img)  
-# frame_main = Frame(gui_menu,highlightbackground='black', highlightthickness=1)
 # frame_main.pack()
 
 frame_title = Frame(gui_menu)
@@ -50,12 +64,3 @@ class Menu:
         self.pot_btn.grid(row=3, column=2, padx=padx_g, pady=pady_g)
         self.inv_btn.grid(row=3, column=3, padx=padx_g, pady=pady_g)
         self.rank_btn.grid(row=4, column=1, padx=padx_g, pady=pady_g)
-    # def _packing(self):
-    #     self.label.grid(row=1, column=1)
-    #     self.sum_btn.grid(row=1, column=1)
-    #     self.mul_btn.grid(row=1, column=1)
-    #     self.trans_btn.grid(row=1, column=1)
-    #     self.det_btn.grid(row=1, column=1)
-    #     self.pot_btn.grid(row=1, column=1)
-    #     self.inv_btn.grid(row=1, column=1)
-    #     self.rank_btn.grid(row=1, column=1)
